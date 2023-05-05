@@ -218,7 +218,6 @@ class MiaoshouRuntime(object):
 
     def get_images_html(self, search: str = '', model_type: str = 'All') -> t.List[str]:
         self.logger.info(f"get_image_html: model_type = {model_type}, and search pattern = '{search}'")
-
         model_cover_thumbnails = []
         model_format = []
 
@@ -243,9 +242,9 @@ class MiaoshouRuntime(object):
                             and (self.allow_nsfw or (not self.allow_nsfw and not model.get('nsfw'))):
                         model_cover_thumbnails.append([
                             [f"""
-                                <div style="display: flex; align-items: center;">
+                                <div class="miaoshou-model-cover" style="display: flex; align-items: center;">
                                     <div id="{str(model.get('id'))}" style="margin-right: 10px;" class="model-item">
-                                        <img src="{model['modelVersions'][0]['images'][0]['url'].replace('width=450', 'width=100')}" style="width:100px;">
+                                        <img data-src="{model['modelVersions'][0]['images'][0]['url'].replace('width=450', 'width=100')}" style="width:100px;">
                                     </div>
                                     <div style="flex:1; width:100px;">
                                         <h3 style="text-align:left; word-wrap:break-word;">{model.get('name')}</h3>
@@ -551,7 +550,7 @@ class MiaoshouRuntime(object):
                 htmlDetail += f"<tr><td>Type:</td><td>{m['type']}</td></tr>"
             if latest_version.get('baseModel'):
                 htmlDetail += f"<tr><td>Base Model:</td><td>{latest_version['baseModel']}</td></tr>"
-            htmlDetail += f"<tr><td>NFSW:</td><td>{m.get('nsfw') if m.get('nsfw') is not None else 'false'}</td></tr>"
+            htmlDetail += f"<tr><td>NSFW:</td><td>{m.get('nsfw') if m.get('nsfw') is not None else 'false'}</td></tr>"
             if m.get('tags') and isinstance(m.get('tags'), list):
                 htmlDetail += f"<tr><td>Tags:</td><td>"
                 for t in m['tags']:
